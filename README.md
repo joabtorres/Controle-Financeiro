@@ -1,3 +1,3 @@
 # Controle Financeiro - V 1.0
-\n
-Projeto desenvolvido na linguagem JAVA SE
+
+Este projeto foi desenvolvido linguagem JAVA SE, utilizando biblioteca SWING.
