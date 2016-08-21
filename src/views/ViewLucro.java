@@ -8,6 +8,7 @@ package views;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.util.Calendar;
 
 /**
  *
@@ -23,6 +24,18 @@ public class ViewLucro extends javax.swing.JInternalFrame {
     public ViewLucro() {
         initComponents();
         parent = this.parent;
+        jTextFieldData.setText(setData());
+    }
+
+    public String setData() {
+        Calendar c = Calendar.getInstance();
+        String msg = "" + c.get(Calendar.DAY_OF_MONTH);
+        if (c.get(Calendar.MONTH) < 10) {
+            msg += "/0" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR);
+        } else {
+            msg += "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR);
+        }
+        return msg;
     }
 
     public void setPosicao() {
@@ -146,7 +159,8 @@ public class ViewLucro extends javax.swing.JInternalFrame {
 
         jTextFieldValor.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 1, true));
         jTextFieldValor.setForeground(new java.awt.Color(0, 102, 102));
-        jTextFieldValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jTextFieldValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
+        jTextFieldValor.setToolTipText("");
         jTextFieldValor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextFieldValor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -156,7 +170,11 @@ public class ViewLucro extends javax.swing.JInternalFrame {
 
         jTextFieldData.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 1, true));
         jTextFieldData.setForeground(new java.awt.Color(0, 102, 102));
-        jTextFieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        try {
+            jTextFieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         jTextFieldData.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextFieldData.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {

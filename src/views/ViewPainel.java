@@ -502,7 +502,8 @@ public class ViewPainel extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemAjudaActionPerformed
 
     private void jMenuItemSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreActionPerformed
-        
+        ViewSobre sobre = new ViewSobre(this, true);
+        sobre.setVisible(true);
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
 
     /**
