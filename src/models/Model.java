@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface Model {
 
-    public void salvar();
+    public boolean salvar(String sql);
 
-    public void deletar();
+    public boolean deletar(String sql);
 
-    public List result();
+    public List result(String sql);
 
-    public List resulId();
+    public List resulId(String sql);
 }

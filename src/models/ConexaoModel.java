@@ -16,11 +16,11 @@ import java.sql.SQLException;
 public class ConexaoModel {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/controle_financeiro_javase";
+    private static final String URL = "jdbc:mysql://localhost:3306/java_controle_financeiro";
     private static final String USER = "root";
     private static final String PASS = "";
 
-    public static Connection connection() {
+    public static Connection getConnection() {
 
         try {
             Class.forName(DRIVER);

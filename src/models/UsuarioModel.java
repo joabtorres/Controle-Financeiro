@@ -1,6 +1,8 @@
 package models;
 
 import controllers.UsuarioController;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 /**
@@ -11,35 +13,36 @@ import java.util.List;
  * @copyright (c) 22/08/2016, Joab Torres Alencar - Analista de Sistema
  */
 public class UsuarioModel implements Model {
+
     private static UsuarioModel usuarioModel;
+
     private UsuarioModel() {
     }
 
     public static UsuarioModel getUsuarioModel() {
-        if(usuarioModel == null){
+        if (usuarioModel == null) {
             usuarioModel = new UsuarioModel();
         }
         return usuarioModel;
     }
-    
 
     @Override
-    public void salvar() {
-
-    }
-
-    @Override
-    public void deletar() {
+    public boolean salvar(String sql) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<UsuarioController> result() {
+    public boolean deletar(String sql) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<UsuarioController> resulId() {
+    public List result(String sql) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List resulId(String sql) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
