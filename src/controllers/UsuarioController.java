@@ -1,17 +1,18 @@
 package controllers;
 
 /**
- * UsuarioController [TIPO]
- * Descricao: 
+ * UsuarioController [TIPO] Descricao:
+ *
  * @copyright (c) 22/08/2016, Joab Torres Alencar - Analista de Sistema
  */
-public class UsuarioController extends Controller{
+public class UsuarioController{
+
     private int n_codusuario;
     private String c_nomeusuario;
     private String c_usuario;
     private String c_senhausuario;
     private String d_cadastrousuario;
-    private boolean b_permissaousuario;
+    private int b_permissaousuario;
 
     public int getN_codusuario() {
         return n_codusuario;
@@ -53,11 +54,11 @@ public class UsuarioController extends Controller{
         this.d_cadastrousuario = d_cadastrousuario;
     }
 
-    public boolean isB_permissaousuario() {
-        return b_permissaousuario;
+    public int getB_permissaousuario() {
+        return this.b_permissaousuario;
     }
 
-    public void setB_permissaousuario(boolean b_permissaousuario) {
+    public void setB_permissaousuario(int b_permissaousuario) {
         this.b_permissaousuario = b_permissaousuario;
     }
 }

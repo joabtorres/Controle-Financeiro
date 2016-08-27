@@ -1,12 +1,9 @@
 package models;
 
-import controllers.LDIController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * LDIModel responsável para inserir e buscar dados do SQL de Lucros, Despesas e Investimentos
@@ -38,8 +35,8 @@ public class LDIModel implements Model {
             preparedStatement = connection.prepareCall(sql);
             salvar = true;
         } catch (SQLException ex) {
-            System.out.println("Erro ao salvar: "+ex.getMessage());
-        }finally{
+            System.out.println("Erro ao salvar: " + ex.getMessage());
+        } finally {
             ConexaoModel.closeConnection(connection, preparedStatement);
         }
         return salvar;

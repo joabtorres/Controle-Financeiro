@@ -1,9 +1,18 @@
 package controllers;
 
-
 import java.util.Calendar;
 
 public class Controller {
+
+    private static int n_codUsuario;
+
+    public static int getN_codUsuario() {
+        return n_codUsuario;
+    }
+
+    public static void setN_codUsuario(int n_codUsuario) {
+        Controller.n_codUsuario = n_codUsuario;
+    }
 
     /**
      * setMoedaSql()
@@ -14,7 +23,7 @@ public class Controller {
      *
      * @return valor é um double;
      */
-    protected static double setMoedaSql(String moeda) {
+    public static double setMoedaSql(String moeda) {
         double valor;
         moeda = moeda.replace("R$ ", "");
         moeda = moeda.replace(".", "");
@@ -34,7 +43,7 @@ public class Controller {
      *
      * @return valor é uma String;
      */
-    protected static String setMoedaView(double moeda) {
+    public static String setMoedaView(double moeda) {
         String valor = String.format("%.2f", moeda);
         valor = valor.replace(".", ",");
         String arrayString[] = valor.split(",");
@@ -86,5 +95,41 @@ public class Controller {
         }
         data += "-" + calendar.get(Calendar.DAY_OF_MONTH);
         return data;
+    }
+
+    /**
+     * setDataSQL() Transforma uma string padrão (dia/mes/ano ou dia-mes-ano) para padrão (ano-mes-dia);
+     *
+     * @param data é um objeto String para ser tratado.
+     * @return dataFormatada uma string no formato ano-mes-dia
+     */
+    public static String setDataSQL(String data) {
+        String dataFormatada = null;
+        if (data.contains("/")) {
+            String array[] = data.split("/");
+            dataFormatada = array[2] + "-" + array[1] + "-" + array[0];
+        } else {
+            String array[] = data.split("-");
+            dataFormatada = array[2] + "-" + array[1] + "-" + array[0];
+        }
+        return dataFormatada;
+    }
+
+    /**
+     * setDataSQL() Transforma uma data SQL (ano/mes/dia ou ano-mes-dia) para padrão brasileiro (dia/mes/ano)
+     *
+     * @param data é um objeto String para ser tratado.
+     * @return dataFormatada uma string no formato ano-mes-dia
+     */
+    public static String setDataView(String data) {
+        String dataFormatada = null;
+        if (data.contains("/")) {
+            String array[] = data.split("/");
+            dataFormatada = array[2] + "/" + array[1] + "/" + array[0];
+        } else {
+            String array[] = data.split("-");
+            dataFormatada = array[2] + "/" + array[1] + "/" + array[0];
+        }
+        return dataFormatada;
     }
 }
