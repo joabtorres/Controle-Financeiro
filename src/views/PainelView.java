@@ -92,6 +92,8 @@ public class PainelView extends javax.swing.JFrame {
         jButtonUsuarioAlterar.setBorderPainted(false);
         jButtonUsuarioAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonUsuarioAlterar.setFocusable(false);
+        jButtonUsuarioAlterar.setMaximumSize(new java.awt.Dimension(150, 50));
+        jButtonUsuarioAlterar.setMinimumSize(new java.awt.Dimension(110, 50));
         jButtonUsuarioAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUsuarioAlterarActionPerformed(evt);
@@ -107,6 +109,8 @@ public class PainelView extends javax.swing.JFrame {
         jButtonLucroAlterar.setBorderPainted(false);
         jButtonLucroAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonLucroAlterar.setFocusable(false);
+        jButtonLucroAlterar.setMaximumSize(new java.awt.Dimension(150, 50));
+        jButtonLucroAlterar.setMinimumSize(new java.awt.Dimension(110, 50));
         jButtonLucroAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLucroAlterarActionPerformed(evt);
@@ -122,6 +126,8 @@ public class PainelView extends javax.swing.JFrame {
         jButtonDespesaAlterar.setBorderPainted(false);
         jButtonDespesaAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonDespesaAlterar.setFocusable(false);
+        jButtonDespesaAlterar.setMaximumSize(new java.awt.Dimension(150, 50));
+        jButtonDespesaAlterar.setMinimumSize(new java.awt.Dimension(110, 50));
         jButtonDespesaAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDespesaAlterarActionPerformed(evt);
@@ -137,6 +143,8 @@ public class PainelView extends javax.swing.JFrame {
         jButtonInvestimentoAlterar.setBorderPainted(false);
         jButtonInvestimentoAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonInvestimentoAlterar.setFocusable(false);
+        jButtonInvestimentoAlterar.setMaximumSize(new java.awt.Dimension(150, 50));
+        jButtonInvestimentoAlterar.setMinimumSize(new java.awt.Dimension(110, 50));
         jButtonInvestimentoAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonInvestimentoAlterarActionPerformed(evt);
@@ -149,14 +157,14 @@ public class PainelView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonUsuarioAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonLucroAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLucroAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonDespesaAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonDespesaAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonInvestimentoAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonInvestimentoAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(593, Short.MAX_VALUE))
+                .addComponent(jButtonUsuarioAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                .addGap(593, 593, 593))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,7 +450,7 @@ public class PainelView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemAdicionarDespesaActionPerformed
 
     private void jMenuItemAdicionarInvestimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAdicionarInvestimentoActionPerformed
-        getViewInternalFrame(new DespesaView());
+        getViewInternalFrame(new InvestimentoView());
     }//GEN-LAST:event_jMenuItemAdicionarInvestimentoActionPerformed
 
     private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
@@ -462,7 +470,7 @@ public class PainelView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemLucroAdicionarActionPerformed
 
     private void jMenuItemLucroAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLucroAlterarActionPerformed
-        getViewInternalFrame(new ListUsuariosView(this.jDesktopPanePainel));
+        getViewInternalFrame(new LucroListView(this.jDesktopPanePainel));
     }//GEN-LAST:event_jMenuItemLucroAlterarActionPerformed
 
     private void jMenuItemDespesaAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDespesaAdicionarActionPerformed
@@ -470,7 +478,7 @@ public class PainelView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemDespesaAdicionarActionPerformed
 
     private void jMenuItemDespesaAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDespesaAlterarActionPerformed
-        getViewInternalFrame(new ListUsuariosView(this.jDesktopPanePainel));
+        getViewInternalFrame(new DespesaListView(this.jDesktopPanePainel));
     }//GEN-LAST:event_jMenuItemDespesaAlterarActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
@@ -478,7 +486,7 @@ public class PainelView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItemInvestimentoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInvestimentoAlterarActionPerformed
-        getViewInternalFrame(new ListUsuariosView(this.jDesktopPanePainel));
+        getViewInternalFrame(new InvestimentoListView(this.jDesktopPanePainel));
     }//GEN-LAST:event_jMenuItemInvestimentoAlterarActionPerformed
 
     private void jButtonUsuarioAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsuarioAlterarActionPerformed
@@ -486,15 +494,15 @@ public class PainelView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonUsuarioAlterarActionPerformed
 
     private void jButtonLucroAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLucroAlterarActionPerformed
-        getViewInternalFrame(new ListUsuariosView(this.jDesktopPanePainel));
+        getViewInternalFrame(new LucroListView(this.jDesktopPanePainel));
     }//GEN-LAST:event_jButtonLucroAlterarActionPerformed
 
     private void jButtonDespesaAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDespesaAlterarActionPerformed
-        getViewInternalFrame(new ListUsuariosView(this.jDesktopPanePainel));
+        getViewInternalFrame(new DespesaListView(this.jDesktopPanePainel));
     }//GEN-LAST:event_jButtonDespesaAlterarActionPerformed
 
     private void jButtonInvestimentoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInvestimentoAlterarActionPerformed
-        getViewInternalFrame(new ListUsuariosView(this.jDesktopPanePainel));
+        getViewInternalFrame(new InvestimentoListView(this.jDesktopPanePainel));
     }//GEN-LAST:event_jButtonInvestimentoAlterarActionPerformed
 
     private void jMenuItemAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAjudaActionPerformed

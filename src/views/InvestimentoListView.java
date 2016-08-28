@@ -1,87 +1,80 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package views;
 
 import com.sun.glass.events.KeyEvent;
 import controllers.Controller;
+import controllers.LDIController;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import javax.swing.JDesktopPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import models.UsuarioModel;
+import models.LDIModel;
 
 /**
  *
  * @author Beck
  */
-public class ListUsuariosView extends javax.swing.JInternalFrame {
+public class InvestimentoListView extends javax.swing.JInternalFrame {
 
     private JDesktopPane painel;
     private Frame parent;
+    private final String tabelaSQL = "fin_investimentos";
 
-    public ListUsuariosView(JDesktopPane painel) {
+    public InvestimentoListView(JDesktopPane painel) {
         initComponents();
         this.painel = painel;
         parent = this.parent;
         resultList(jTable1, "", "");
     }
 
-    private void setAddUser() {
-        UsuarioView user = new UsuarioView();
-        painel.add(user);
-        user.setVisible(true);
-        user.setPosicao();
+    private void setAddLDI() {
+        InvestimentoView investimentoView = new InvestimentoView();
+        painel.add(investimentoView);
+        investimentoView.setVisible(true);
+        investimentoView.setPosicao();
         this.dispose();
+    }
+
+    private void resultLDI() {
+        resultList(jTable1, jComboBoxPesquisa.getSelectedItem().toString(), jTextFieldPesquisa.getText());
     }
 
     private void resultList(javax.swing.JTable tabela, String selecionado, String valor) {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         tabela.setRowSorter(new TableRowSorter(model));
         model.setNumRows(0);
-        UsuarioModel usuarioModel = UsuarioModel.getUsuarioModel();
-        usuarioModel.result(selecionado, valor).stream().forEach((usuarioController) -> {
+        double resultado = 0.0;
+        LDIModel lDIModel = new LDIModel();
+        for (LDIController lDIController : lDIModel.result(this.tabelaSQL, selecionado, valor)) {
             model.addRow(new Object[]{
-                usuarioController.getN_codusuario(),
-                usuarioController.getC_usuario(),
-                Controller.setDataView(usuarioController.getD_cadastrousuario())
+                lDIController.getN_cod(),
+                lDIController.getC_produto(),
+                Controller.setMoedaView(lDIController.getN_valor()),
+                Controller.setDataView(lDIController.getD_cadastro())
             });
-        });
+            resultado += lDIController.getN_valor();
+        }
+        jLabelValorTotal.setText("<html><span style='color: rgb(0,102,102)'>Valor Total: </span><span style='color: rgb(255,51,51)'>" + Controller.setMoedaView(resultado) + "</span></html>");
     }
 
     private void setAlterar() {
         if (jTable1.getSelectedRow() != -1) {
-            UsuarioView user = new UsuarioView((int) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-            painel.add(user);
-            user.setVisible(true);
-            user.setPosicao();
+            InvestimentoView investimentoView = new InvestimentoView((int) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+            painel.add(investimentoView);
+            investimentoView.setVisible(true);
+            investimentoView.setPosicao();
             this.dispose();
         }
     }
 
     private void setRemover() {
         if (jTable1.getSelectedRow() != -1) {
-            UsuarioModel usuarioModel = UsuarioModel.getUsuarioModel();
-            if (usuarioModel.deletar((int) jTable1.getValueAt(jTable1.getSelectedRow(), 0))) {
+
+            if (LDIModel.deletar(this.tabelaSQL, (int) jTable1.getValueAt(jTable1.getSelectedRow(), 0))) {
                 resultList(jTable1, "", "");
-            } else {
-                String msg = "<html>"
-                        + "<h2 style='color:rgb([255,0,51]);'>Aviso de Usuário!</h2>"
-                        + "<span style='text-align: justify; color:rgb(0,102,102); '>"
-                        + "Não é permitido remover o usuário ativo no sistema.</b></span>"
-                        + "</html>";
-                MsgView msgView = new MsgView(parent, true, this, msg);
-                msgView.setVisible(true);
             }
         }
-    }
-
-    private void resultUsuario() {
-        resultList(jTable1, jComboBoxPesquisa.getSelectedItem().toString(), jTextFieldPesquisa.getText());
     }
 
     public void setPosicao() {
@@ -119,6 +112,7 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabelValorTotal = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
@@ -150,8 +144,8 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Lista de Usuários");
-        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/team.png"))); // NOI18N
+        setTitle("Lista de Investimentos");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logo_32x.png"))); // NOI18N
         setMinimumSize(new java.awt.Dimension(745, 551));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -173,7 +167,7 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
 
         jComboBoxPesquisa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboBoxPesquisa.setForeground(new java.awt.Color(0, 102, 102));
-        jComboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuário", "Cod. Usuário" }));
+        jComboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cod", "Produto" }));
         jComboBoxPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jComboBoxPesquisaKeyReleased(evt);
@@ -209,7 +203,7 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+                    .addComponent(jTextFieldPesquisa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -248,11 +242,11 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Cod. Usuário", "Usuário", "Data do Cadastro"
+                "Cod.", "Produto", "Valor", "Data do Cadastro"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -325,6 +319,11 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabelValorTotal.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabelValorTotal.setForeground(new java.awt.Color(255, 51, 51));
+        jLabelValorTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelValorTotal.setText("Valor");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -338,18 +337,22 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addGap(10, 10, 10))
+                        .addGap(169, 169, 169)
+                        .addComponent(jLabelValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelValorTotal, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
@@ -370,8 +373,8 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/team.png"))); // NOI18N
-        jLabel3.setText("Lista de Usuários");
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logo_32x.png"))); // NOI18N
+        jLabel3.setText("Lista de Investimentos");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -380,12 +383,10 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -433,13 +434,13 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setAddUser();
+        this.setAddLDI();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextFieldPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisaKeyReleased
         this.closeView(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.resultUsuario();
+            this.resultLDI();
         }
     }//GEN-LAST:event_jTextFieldPesquisaKeyReleased
 
@@ -449,7 +450,7 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonPesquisarKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.resultUsuario();
+            this.resultLDI();
         }
         this.closeView(evt);
     }//GEN-LAST:event_jButtonPesquisarKeyReleased
@@ -461,7 +462,7 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
     private void jButton2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyReleased
         this.closeView(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.setAddUser();
+            this.setAddLDI();
         }
     }//GEN-LAST:event_jButton2KeyReleased
 
@@ -478,7 +479,7 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-        this.resultUsuario();
+        this.resultLDI();
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jMenuItemAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAlterarActionPerformed
@@ -500,6 +501,7 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelValorTotal;
     private javax.swing.JMenuItem jMenuItemAlterar;
     private javax.swing.JMenuItem jMenuItemRemover;
     private javax.swing.JPanel jPanel1;

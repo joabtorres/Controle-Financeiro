@@ -19,7 +19,7 @@ import models.UsuarioModel;
 public class UsuarioView extends javax.swing.JInternalFrame {
 
     Frame parent;
-    private int cod;
+    private int cod = 0;
 
     /**
      * Creates new form ViewUsuario
@@ -29,9 +29,9 @@ public class UsuarioView extends javax.swing.JInternalFrame {
         parent = this.parent;
     }
 
-    public UsuarioView(int cod) {
+    public UsuarioView(int codigo) {
         initComponents();
-        this.cod = cod;
+        this.cod = codigo;
         parent = this.parent;
         this.resultUsuario();
     }
@@ -42,7 +42,8 @@ public class UsuarioView extends javax.swing.JInternalFrame {
     }
 
     private void resultUsuario() {
-        for (UsuarioController usuarioController : UsuarioModel.resultId(this.cod)) {
+        UsuarioModel usuarioModel = UsuarioModel.getUsuarioModel();
+        for (UsuarioController usuarioController : usuarioModel.resultId(this.cod)) {
             jTextFieldNome.setText(usuarioController.getC_nomeusuario());
             jTextFieldUsuario.setText(usuarioController.getC_usuario());
             jPasswordFieldSenha.setText(usuarioController.getC_senhausuario());
@@ -101,7 +102,8 @@ public class UsuarioView extends javax.swing.JInternalFrame {
                 usuarioController.setC_senhausuario(new String(jPasswordFieldSenha.getPassword()));
                 usuarioController.setD_cadastrousuario(Controller.getDataDefaultSQL());
                 usuarioController.setB_permissaousuario(0);
-                if (this.cod > 0 || UsuarioModel.salvar(usuarioController)) {
+                UsuarioModel usuarioModel = UsuarioModel.getUsuarioModel();
+                if (usuarioModel.salvar(usuarioController)) {
                     this.dispose();
                     String msg;
                     msg = "<html>"

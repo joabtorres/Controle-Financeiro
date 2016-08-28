@@ -30,7 +30,8 @@ public class LoginView extends javax.swing.JFrame {
         usuarioController.setC_usuario(jTextFieldUsuario.getText());
         usuarioController.setC_senhausuario(new String(jPasswordFieldSenha.getPassword()));
         this.dispose();
-        int codUsuario= UsuarioModel.verificarUsuario(usuarioController);
+        UsuarioModel usuarioModel = UsuarioModel.getUsuarioModel();
+        int codUsuario= usuarioModel.verificarUsuario(usuarioController);
         if (codUsuario > 0 ) {
             Controller.setN_codUsuario(codUsuario);
             PainelView painel = new PainelView();

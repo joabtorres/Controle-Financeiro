@@ -7,12 +7,21 @@ package controllers;
  *
  * @copyright (c) 22/08/2016, Joab Torres Alencar - Analista de Sistema
  */
-public class LDIController extends Controller{
+public class LDIController extends Controller {
 
     private int n_cod;
+    private int n_codusuario;
     private String c_produto;
     private String d_cadastro;
     private double n_valor;
+
+    public int getN_codusuario() {
+        return n_codusuario;
+    }
+
+    public void setN_codusuario(int n_codusuario) {
+        this.n_codusuario = n_codusuario;
+    }
 
     public int getN_cod() {
         return n_cod;
@@ -45,5 +54,5 @@ public class LDIController extends Controller{
     public void setN_valor(double n_valor) {
         this.n_valor = n_valor;
     }
-
+    
 }

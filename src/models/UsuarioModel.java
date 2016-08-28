@@ -17,7 +17,20 @@ import java.util.List;
  * @copyright (c) 22/08/2016, Joab Torres Alencar - Analista de Sistema
  */
 public class UsuarioModel {
-    public static boolean salvar(UsuarioController usuarioController) {
+
+    private static UsuarioModel usuarioModel;
+
+    private UsuarioModel() {
+    }
+
+    public static UsuarioModel getUsuarioModel() {
+        if (usuarioModel == null) {
+            usuarioModel = new UsuarioModel();
+        }
+        return usuarioModel;
+    }
+
+    public boolean salvar(UsuarioController usuarioController) {
         Connection connection = ConexaoModel.getConnection();
         PreparedStatement preparedStatement = null;
         boolean salvar = false;
@@ -32,6 +45,7 @@ public class UsuarioModel {
                 preparedStatement.executeUpdate();
                 salvar = true;
             } else if (false == resultUsuario(usuarioController.getC_usuario())) {
+                System.out.println("ENTROU NO INSERT");
                 preparedStatement = connection.prepareStatement("INSERT INTO fin_usuarios (c_nomeusuario, c_usuario, c_senhausuario, d_cadastrousuario, b_permissaousuario) VALUES (?, ?, ?, ?, ?)");
                 preparedStatement.setString(1, usuarioController.getC_nomeusuario());
                 preparedStatement.setString(2, usuarioController.getC_usuario());
@@ -49,7 +63,7 @@ public class UsuarioModel {
         return salvar;
     }
 
-    private static boolean resultUsuario(String usuario) {
+    private boolean resultUsuario(String usuario) {
         boolean result = false;
         Connection connection = ConexaoModel.getConnection();
         PreparedStatement preparedStatement = null;
@@ -73,7 +87,7 @@ public class UsuarioModel {
         return result;
     }
 
-    public static int verificarUsuario(UsuarioController usuarioController) {
+    public int verificarUsuario(UsuarioController usuarioController) {
         int n_codUsuario = 0;
         Connection connection = ConexaoModel.getConnection();
         PreparedStatement preparedStatement = null;
@@ -98,7 +112,7 @@ public class UsuarioModel {
         return n_codUsuario;
     }
 
-    public static boolean deletar(int cod) {
+    public boolean deletar(int cod) {
         boolean deletar = false;
         if (Controller.getN_codUsuario() != cod) {
             Connection connection = ConexaoModel.getConnection();
@@ -118,7 +132,7 @@ public class UsuarioModel {
         return deletar;
     }
 
-    public static List<UsuarioController> result(String selecionado, String valor) {
+    public List<UsuarioController> result(String selecionado, String valor) {
         Connection connection = ConexaoModel.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -154,7 +168,7 @@ public class UsuarioModel {
         return usuarios;
     }
 
-    public static List<UsuarioController> resultId(int cod) {
+    public List<UsuarioController> resultId(int cod) {
         Connection connection = ConexaoModel.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

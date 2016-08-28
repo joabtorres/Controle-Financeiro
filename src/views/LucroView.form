@@ -243,8 +243,9 @@
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="" subtype="-1" type="4"/>
+              <Format format="R$ #,##0.##" subtype="-1" type="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="R$ "/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
