@@ -19,9 +19,7 @@ public class ConexaoModel {
     private static final String URL = "jdbc:mysql://localhost:3306/java_controle_financeiro";
     private static final String USER = "root";
     private static final String PASS = "";
-
     public static Connection getConnection() {
-
         try {
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL, USER, PASS);
@@ -31,7 +29,6 @@ public class ConexaoModel {
     }
 
     public static void closeConnection(Connection connection) {
-
         try {
             if (connection != null) {
                 connection.close();
