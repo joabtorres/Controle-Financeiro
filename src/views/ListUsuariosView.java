@@ -45,11 +45,13 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
         model.setNumRows(0);
         UsuarioModel usuarioModel = UsuarioModel.getUsuarioModel();
         usuarioModel.result(selecionado, valor).stream().forEach((usuarioController) -> {
-            model.addRow(new Object[]{
-                usuarioController.getN_codusuario(),
-                usuarioController.getC_usuario(),
-                Controller.setDataView(usuarioController.getD_cadastrousuario())
-            });
+            if (usuarioController.getB_permissaousuario() == 0 || Controller.isB_permissao() == true) {
+                model.addRow(new Object[]{
+                    usuarioController.getN_codusuario(),
+                    usuarioController.getC_usuario(),
+                    Controller.setDataView(usuarioController.getD_cadastrousuario())
+                });
+            }
         });
     }
 
@@ -66,7 +68,7 @@ public class ListUsuariosView extends javax.swing.JInternalFrame {
     private void setRemover() {
         if (jTable1.getSelectedRow() != -1) {
             UsuarioModel usuarioModel = UsuarioModel.getUsuarioModel();
-            if (usuarioModel.deletar((int) jTable1.getValueAt(jTable1.getSelectedRow(), 0))) {
+            if (usuarioModel.deletar((int) jTable1.getValueAt(jTable1.getSelectedRow(), 0)) && Controller.getN_codUsuario() != ((int) jTable1.getValueAt(jTable1.getSelectedRow(), 0))) {
                 resultList(jTable1, "", "");
             } else {
                 String msg = "<html>"

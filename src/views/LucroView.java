@@ -43,13 +43,15 @@ public class LucroView extends javax.swing.JInternalFrame {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
-    private void resultLDI(){
-        for(LDIController lDIController : LDIModel.resulId(tabelaSQL, cod)){
+
+    private void resultLDI() {
+        for (LDIController lDIController : LDIModel.resulId(tabelaSQL, cod)) {
             jTextFieldDescricao.setText(lDIController.getC_produto());
             jTextFieldValor.setText(Controller.setMoedaView(lDIController.getN_valor()));
             jTextFieldData.setText(Controller.setDataView(lDIController.getD_cadastro()));
         }
     }
+
     private void salvar(javax.swing.JFormattedTextField data, javax.swing.JTextField descricao, javax.swing.JFormattedTextField valor) {
         if (!(data.getText()).equals("") && !(descricao.getText()).equals("") && !(valor.getText()).equals("")) {
             LDIController lDIController = new LDIController();
@@ -295,6 +297,9 @@ public class LucroView extends javax.swing.JInternalFrame {
 
     private void jButtonConfirmarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonConfirmarKeyReleased
         this.closeView(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.salvar(jTextFieldData, jTextFieldDescricao, jTextFieldValor);
+        }
     }//GEN-LAST:event_jButtonConfirmarKeyReleased
 
     private void jButtonCancelarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonCancelarKeyReleased

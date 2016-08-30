@@ -5,6 +5,15 @@ import java.util.Calendar;
 public class Controller {
 
     private static int n_codUsuario;
+    private static boolean b_permissao;
+
+    public static boolean isB_permissao() {
+        return b_permissao;
+    }
+
+    public static void setB_permissao(int num) {
+        Controller.b_permissao = (num != 0);
+    }
 
     public static int getN_codUsuario() {
         return n_codUsuario;
@@ -72,9 +81,9 @@ public class Controller {
         Calendar calendar = Calendar.getInstance();
         String data = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
         if (calendar.get(Calendar.MONTH) < 10) {
-            data += "/0" + calendar.get(Calendar.MONTH);
+            data += "/0" + (1 + calendar.get(Calendar.MONTH));
         } else {
-            data += "/" + calendar.get(Calendar.MONTH);
+            data += "/" + (1 + calendar.get(Calendar.MONTH));
         }
         data += "/" + calendar.get(Calendar.YEAR);
         return data;
@@ -89,9 +98,9 @@ public class Controller {
         Calendar calendar = Calendar.getInstance();
         String data = Integer.toString(calendar.get(Calendar.YEAR));
         if (calendar.get(Calendar.MONTH) < 10) {
-            data += "-0" + calendar.get(Calendar.MONTH);
+            data += "-0" + (1 + calendar.get(Calendar.MONTH));
         } else {
-            data += "-" + calendar.get(Calendar.MONTH);
+            data += "-" + (1 + calendar.get(Calendar.MONTH));
         }
         data += "-" + calendar.get(Calendar.DAY_OF_MONTH);
         return data;

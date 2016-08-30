@@ -19,6 +19,7 @@ import models.UsuarioModel;
 public class LoginView extends javax.swing.JFrame {
 
     Frame parent;
+
     public LoginView() {
         initComponents();
         parent = this.parent;
@@ -31,17 +32,15 @@ public class LoginView extends javax.swing.JFrame {
         usuarioController.setC_senhausuario(new String(jPasswordFieldSenha.getPassword()));
         this.dispose();
         UsuarioModel usuarioModel = UsuarioModel.getUsuarioModel();
-        int codUsuario= usuarioModel.verificarUsuario(usuarioController);
-        if (codUsuario > 0 ) {
-            Controller.setN_codUsuario(codUsuario);
+        if (usuarioModel.verificarUsuario(usuarioController)) {
             PainelView painel = new PainelView();
             painel.setVisible(true);
         } else {
             String msg = "<html>"
-                        + "<h2 style='color:rgb([255,0,51]);'>Aviso de Acesso!</h2>"
-                        + "<span style='text-align: justify; color:rgb(0,102,102); '>"
-                        + "Usuário ou senha está incorreto.</b></span>"
-                        + "</html>";
+                    + "<h2 style='color:rgb([255,0,51]);'>Aviso de Acesso!</h2>"
+                    + "<span style='text-align: justify; color:rgb(0,102,102); '>"
+                    + "Usuário ou senha está incorreto.</b></span>"
+                    + "</html>";
             MsgView msgView = new MsgView(parent, true, this, msg);
             msgView.setVisible(true);
             jTextFieldUsuario.setText("");

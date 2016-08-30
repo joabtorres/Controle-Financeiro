@@ -87,8 +87,8 @@ public class UsuarioModel {
         return result;
     }
 
-    public int verificarUsuario(UsuarioController usuarioController) {
-        int n_codUsuario = 0;
+    public boolean verificarUsuario(UsuarioController usuarioController) {
+        boolean verificar = false;
         Connection connection = ConexaoModel.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -99,17 +99,20 @@ public class UsuarioModel {
             preparedStatement.setString(1, usuarioController.getC_usuario());
             preparedStatement.setString(2, usuarioController.getC_senhausuario());
             resultSet = preparedStatement.executeQuery();
+            int count =0;
             while (resultSet.next()) {
-                n_codUsuario = resultSet.getInt("n_codusuario");
+                Controller.setN_codUsuario(resultSet.getInt("n_codusuario"));
+                Controller.setB_permissao(resultSet.getInt("b_permissaousuario"));
+                count++;
             }
-
+            verificar = (count>0);
         } catch (SQLException ex) {
             System.out.println("Erro ao verificar usuario: " + ex.getMessage());
         } finally {
             ConexaoModel.closeConnection(connection, preparedStatement, resultSet);
         }
 
-        return n_codUsuario;
+        return verificar;
     }
 
     public boolean deletar(int cod) {
@@ -122,6 +125,17 @@ public class UsuarioModel {
                 preparedStatement.setInt(1, cod);
                 preparedStatement.executeUpdate();
                 deletar = true;
+                if (deletar) {
+                    preparedStatement = connection.prepareCall("DELETE FROM fin_lucros WHERE n_codusuario =?");
+                    preparedStatement.setInt(1, cod);
+                    preparedStatement.executeUpdate();
+                    preparedStatement = connection.prepareCall("DELETE FROM fin_despesas WHERE n_codusuario =?");
+                    preparedStatement.setInt(1, cod);
+                    preparedStatement.executeUpdate();
+                    preparedStatement = connection.prepareCall("DELETE FROM fin_investimentos WHERE n_codusuario =?");
+                    preparedStatement.setInt(1, cod);
+                    preparedStatement.executeUpdate();
+                }
             } catch (SQLException ex) {
                 System.out.println("Erro ao deleta: " + ex.getMessage());
             } finally {

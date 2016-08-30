@@ -295,6 +295,9 @@ public class InvestimentoView extends javax.swing.JInternalFrame {
 
     private void jButtonConfirmarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonConfirmarKeyReleased
         this.closeView(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.salvar(jTextFieldData, jTextFieldDescricao, jTextFieldValor);
+        }
     }//GEN-LAST:event_jButtonConfirmarKeyReleased
 
     private void jButtonCancelarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonCancelarKeyReleased
